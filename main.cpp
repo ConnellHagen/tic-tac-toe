@@ -6,5 +6,10 @@ using std::cout;
 int main()
 {
     Board mainboard(3, true);
-    mainboard.display_board();
+    while(!mainboard.is_won())
+    {
+        mainboard.display_board();
+        mainboard.input_coord();
+        cout << mainboard.is_won();
+    }
 }
