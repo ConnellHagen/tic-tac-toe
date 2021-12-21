@@ -5,6 +5,14 @@ using std::vector;
 using std::cout;
 using std::cin;
 
+Board::Board(int init_size, bool init_x_turn)
+{
+    size = init_size;
+    x_turn = init_x_turn;
+    //0 for empty, 1 for x, 2 for o
+    
+}
+
 bool Board::is_x_turn()
 {
     return x_turn;
@@ -36,18 +44,10 @@ void Board::display_board()
             }
             else
             {
-                cout << Board::number_to_symbol(get_item_at_square(i, j));
+                cout << Board::number_to_symbol(get_item_at_square(i, j)) << ' ';
             }
             if(j == size-1) 
                 cout << "\n";
-            /*else
-            {
-                if(j == -1) cout << i << " ";
-                else cout << Board::number_to_symbol(get_item_at_square(i, j));
-            }*/ 
-            //-1 issues i think here
-            
-            
         }
     }
 
@@ -59,7 +59,6 @@ void Board::input_coord()
     int y_coord;
     cout << "Please enter an X coordinate: \n";
     cin >> x_coord;
-    //display_board();
     cout << "Please enter a Y coordinate: \n";
     cin >> y_coord;
 
@@ -91,8 +90,7 @@ void Board::switch_turn()
 
 int Board::get_item_at_square(int const &x, int const &y)
 {
-    return 0;
-    //return squares[y][x];
+    return squares[y][x];
 }
 
 void Board::set_item_at_square(int const &x, int const &y, int const &val)
@@ -121,10 +119,4 @@ bool Board::is_won()
     return false;
 }
 
-Board::Board(int init_size, bool init_x_turn)
-{
-    size = init_size;
-    x_turn = init_x_turn;
-    vector<vector<int>> squares(size, vector<int>(size, 0));
-    //0 for empty, 1 for x, 2 for o
-}
+
