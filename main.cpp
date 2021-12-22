@@ -5,10 +5,16 @@ using std::cout;
 
 int main()
 {
-    Board mainboard(3, true);
+    int board_size = Board::enter_size();
+    Board mainboard(board_size, true);
+    
     while(!mainboard.is_won())
     {
         mainboard.display_board();
-        mainboard.input_coord();
+        //runs input_coord until it is successful, if unsucessful, will redo the display with error message argument
+        while(mainboard.input_coord() != 0){
+            mainboard.display_board(true);
+        }
+
     }
 }
