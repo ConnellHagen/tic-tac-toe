@@ -10,7 +10,7 @@ private:
     static int xturn_to_num(bool const &xturn);
 
 public:
-    Board(int init_size, bool x_turn) : squares(init_size, std::vector<int>(init_size, 0)){};
+    Board(int init_size, bool x_turn);
     bool is_x_turn();
     int get_size();
     void display_board();

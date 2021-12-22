@@ -5,7 +5,7 @@ using std::vector;
 using std::cout;
 using std::cin;
 
-Board::Board(int init_size, bool init_x_turn)
+Board::Board(int init_size, bool init_x_turn): squares(std::vector(init_size, std::vector<int>(init_size, 0)))
 {
     size = init_size;
     x_turn = init_x_turn;
