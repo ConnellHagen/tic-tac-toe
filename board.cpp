@@ -150,7 +150,7 @@ int Board::winner()
     //checking vertical line wins
     for(int i = 0; i < size; i++)
     {
-        char first_square;
+        int first_square;
         for(int j = 0; j < size; j++)
         {
             if(get_item_at_square(i, j) == 0)
@@ -160,7 +160,7 @@ int Board::winner()
             }
             if(j == 0) first_square = get_item_at_square(i, j);
             else if(get_item_at_square(i, j) != first_square) break;
-            if(j == size - 1) return Board::symbol_to_number(first_square);
+            if(j == size - 1) return first_square;
         }
     }
 
@@ -177,7 +177,7 @@ int Board::winner()
             }
             if(i == 0) first_square = get_item_at_square(i, j);
             else if(get_item_at_square(i, j) != first_square) break;
-            if(i == size - 1) return Board::symbol_to_number(first_square);
+            if(i == size - 1) return first_square;
         }
     }
 
@@ -196,7 +196,7 @@ int Board::winner()
                 }
                 if(j == 0) first_square = get_item_at_square(j, j);
                 else if(get_item_at_square(j, j) != first_square) break;
-                if(j == size - 1) return Board::symbol_to_number(first_square);
+                if(j == size - 1) return first_square;
             }
             else
             {
@@ -207,7 +207,7 @@ int Board::winner()
                 }
                 if(j == 0) first_square = get_item_at_square(size - 1, j);
                 else if(get_item_at_square(size - j - 1, j) != first_square) break;
-                if(j == size - 1) return Board::symbol_to_number(first_square);
+                if(j == size - 1) return first_square;
             }
             
         }
