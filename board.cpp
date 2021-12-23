@@ -22,6 +22,17 @@ char Board::number_to_symbol(int const &num)
     }
 }
 
+int Board::symbol_to_number(char const &symbol)
+{
+    switch(symbol)
+    {
+        case ' ': return 0;
+        case 'x': return 1;
+        case 'o': return 2;
+        default: return 3;
+    }
+}
+
 int Board::xturn_to_num(bool const &xturn)
 {
     if(xturn) return 1;
@@ -52,9 +63,13 @@ int Board::enter_size()
 
 }
 
-void Board::display_board(bool wasIllegal)
+void Board::print_blank()
 {
-    cout << "\n\n\n\n\n\n\n\n\n";
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+}
+
+void Board::display_board(bool const &wasIllegal)
+{
     if(wasIllegal)
     {
         cout << "Illegal move, try again\n";
@@ -127,9 +142,96 @@ int Board::get_size()
     return size;
 }
 
-bool Board::is_won()
+//0 for no winner, 1 for x, 2 for o, 3 for cat's game.
+int Board::winner()
 {
-    return false;
+    bool all_filled_squares = true;
+
+    //checking vertical line wins
+    for(int i = 0; i < size; i++)
+    {
+        char first_square;
+        for(int j = 0; j < size; j++)
+        {
+            if(get_item_at_square(i, j) == 0)
+            {
+                all_filled_squares = false;
+                break;
+            }
+            if(j == 0) first_square = get_item_at_square(i, j);
+            else if(get_item_at_square(i, j) != first_square) break;
+            if(j == size - 1) return Board::symbol_to_number(first_square);
+        }
+    }
+
+    //checking horizontal line wins
+    for(int j = 0; j < size; j++)
+    {
+        char first_square;
+        for(int i = 0; i < size; i++)
+        {
+            if(get_item_at_square(i, j) == 0)
+            {
+                all_filled_squares = false;
+                break;
+            }
+            if(i == 0) first_square = get_item_at_square(i, j);
+            else if(get_item_at_square(i, j) != first_square) break;
+            if(i == size - 1) return Board::symbol_to_number(first_square);
+        }
+    }
+
+    //checking diagonal line wins
+    for(int i = 0; i <= 1; i++)
+    {
+        char first_square;
+        for(int j = 0; j < size; j++)
+        {   
+            if(i == 0)
+            {
+                if(get_item_at_square(j, j) == 0)
+                {
+                    all_filled_squares = false;
+                    break;
+                }
+                if(j == 0) first_square = get_item_at_square(j, j);
+                else if(get_item_at_square(j, j) != first_square) break;
+                if(j == size - 1) return Board::symbol_to_number(first_square);
+            }
+            else
+            {
+                if(get_item_at_square(size - j - 1, j) == 0)
+                {
+                    all_filled_squares = false;
+                    break;
+                }
+                if(j == 0) first_square = get_item_at_square(size - 1, j);
+                else if(get_item_at_square(size - j - 1, j) != first_square) break;
+                if(j == size - 1) return Board::symbol_to_number(first_square);
+            }
+            
+        }
+    }
+
+    //cat's game / draw
+    if(all_filled_squares) return 3;
+
+    //default return (no winner)
+    return 0;
+}
+
+void Board::display_win_message()
+{
+    Board::print_blank();
+    display_board();
+    int the_winner = winner();
+    switch(the_winner)
+    {
+        case 0: cout << "Nobody has won the game... somehow...\n"; break;
+        case 1: cout << "Player X has won the game!\n"; break;
+        case 2: cout << "Player O has won the game!\n"; break;
+        case 3: cout << "It's a cat's game!"; break;
+    }
 }
 
 bool Board::is_legal_move(int const &x, int const &y)
